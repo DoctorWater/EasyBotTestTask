@@ -1,13 +1,11 @@
-package ru.malkov.easybottesttask.Entities;
+package ru.malkov.easybottesttask.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.malkov.easybottesttask.InterfacesAndAbstractClasses.Product;
+import ru.malkov.easybottesttask.abstractClasses.Product;
 
 @Entity
 @Getter
@@ -22,6 +20,7 @@ public class Laptop extends Product {
         FIFTEEN_INCHES,
         SEVENTEEN_INCHES
     }
+    @Enumerated(EnumType.STRING)
     private LaptopSize size;
 
     public Laptop(Long serialNumber, String manufacturer, Float price, Integer leftNumber, LaptopSize size) {

@@ -1,11 +1,11 @@
-package ru.malkov.easybottesttask.InterfacesAndAbstractClasses;
+package ru.malkov.easybottesttask.abstractClasses;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.malkov.easybottesttask.Entities.ProductType;
+import ru.malkov.easybottesttask.entities.ProductType;
 
 /**
  * Main abstract class of all products.
@@ -28,8 +28,6 @@ public abstract class Product {
     private Integer leftNumber;
     @Enumerated(EnumType.STRING)
     private ProductType productType;
-
-    //TODO: настроить наследование для БД
 
     @Override
     public boolean equals(Object o) {

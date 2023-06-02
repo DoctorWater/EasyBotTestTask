@@ -1,10 +1,8 @@
-package ru.malkov.easybottesttask.Entities;
+package ru.malkov.easybottesttask.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import lombok.*;
-import ru.malkov.easybottesttask.InterfacesAndAbstractClasses.Product;
+import ru.malkov.easybottesttask.abstractClasses.Product;
 @Entity
 @Getter
 @Setter
@@ -23,5 +21,6 @@ public class PersonalComputer extends Product {
         this.formFactor = formFactor;
     }
 
+    @Enumerated(EnumType.STRING)
     private PCFormFactor formFactor;
 }

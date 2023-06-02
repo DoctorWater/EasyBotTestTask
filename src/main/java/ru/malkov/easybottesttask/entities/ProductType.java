@@ -1,4 +1,4 @@
-package ru.malkov.easybottesttask.Entities;
+package ru.malkov.easybottesttask.entities;
 
 public enum ProductType {
     PC,

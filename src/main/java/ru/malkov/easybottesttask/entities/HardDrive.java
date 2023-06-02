@@ -1,4 +1,4 @@
-package ru.malkov.easybottesttask.Entities;
+package ru.malkov.easybottesttask.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.malkov.easybottesttask.InterfacesAndAbstractClasses.Product;
+import ru.malkov.easybottesttask.abstractClasses.Product;
 @Entity
 @Getter
 @Setter
