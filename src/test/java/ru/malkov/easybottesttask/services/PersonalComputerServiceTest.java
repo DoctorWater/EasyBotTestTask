@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.malkov.easybottesttask.entities.PersonalComputer;
-import ru.malkov.easybottesttask.repositories.PersonalComputerRepository;
+import ru.malkov.easybottesttask.repositories.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class PersonalComputerServiceTest {
-    private PersonalComputerService service;
-    private PersonalComputerRepository repository;
+    private ProductService<PersonalComputer> service;
+    private ProductRepository<PersonalComputer> repository;
 
     @BeforeEach
     void setUp() {
-        repository = mock(PersonalComputerRepository.class);
-        service = new PersonalComputerService(repository);
+        repository =(ProductRepository<PersonalComputer>) mock(ProductRepository.class);
+        service = new ProductService<>(repository);
     }
 
 

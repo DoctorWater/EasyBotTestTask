@@ -2,20 +2,41 @@ package ru.malkov.easybottesttask.services;
 
 import org.springframework.stereotype.Service;
 import ru.malkov.easybottesttask.abstractClasses.Product;
+import ru.malkov.easybottesttask.entities.HardDrive;
+import ru.malkov.easybottesttask.entities.Laptop;
+import ru.malkov.easybottesttask.entities.Monitor;
+import ru.malkov.easybottesttask.entities.PersonalComputer;
+import ru.malkov.easybottesttask.repositories.ProductRepository;
 
 import java.util.List;
 
 @Service
-public interface ProductService<T extends Product> {
-    T addProduct(T product);
+public class ProductService<T extends Product> {
+    ProductRepository<T> repository;
 
-    T updateProduct(Long id, T product);
+    public ProductService(ProductRepository<T> repository) {
+        this.repository = repository;
+    }
 
-    List<T> getAllProducts();
+    T addProduct(T product){
+        return repository.save(product);
+    }
 
-    T getProductById(Long id);
+    T updateProduct(Long id, T source){
+        T pcToUpdate = repository.getReferenceById(id);
+        updateProduct(pcToUpdate, source);
+        return repository.save(pcToUpdate);
+    }
 
-    default void updateProduct(Product target, Product source) {
+    List<T> getAllProducts(){
+        return repository.findAllByOrderBySerialNumberAsc();
+    }
+
+    T getProductById(Long id){
+        return repository.getReferenceById(id);
+    }
+
+    private void updateProduct(Product target, Product source) {
         if (source.getSerialNumber() != null) {
             target.setSerialNumber(source.getSerialNumber());
         }
