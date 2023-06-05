@@ -4,7 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.malkov.easybottesttask.entities.PersonalComputer;
-import ru.malkov.easybottesttask.repositories.PersonalComputerRepository;
+import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
+import ru.malkov.easybottesttask.repositories.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class PersonalComputerServiceTest {
-    private PersonalComputerService service;
-    private PersonalComputerRepository repository;
+    private ProductService<PersonalComputer> service;
+    private ProductRepository<PersonalComputer> repository;
 
     @BeforeEach
     void setUp() {
-        repository = mock(PersonalComputerRepository.class);
-        service = new PersonalComputerService(repository);
+        repository =(ProductRepository<PersonalComputer>) mock(ProductRepository.class);
+        service = new ProductService<>(repository);
     }
 
 
@@ -40,7 +41,7 @@ public class PersonalComputerServiceTest {
 
     @Test
     @DisplayName("Should update the existing object, save and return it")
-    void updatePersonalComputerAndReturnsIt() {
+    void updatePersonalComputerAndReturnsIt() throws ProductTypeCastException {
         PersonalComputer target = new PersonalComputer(
                 123456L, "Dell", 1000.0f, 10, PersonalComputer.PCFormFactor.DESKTOP);
         PersonalComputer source = new PersonalComputer(
@@ -51,7 +52,7 @@ public class PersonalComputerServiceTest {
         service.updateProduct(123456L, source);
 
         assertEquals("HP", target.getManufacturer());
-        assertNotNull(target.getProductType());
+        assertNotNull(target.getSerialNumber());
     }
 
     @Test

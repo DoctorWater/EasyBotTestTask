@@ -2,34 +2,40 @@ package ru.malkov.easybottesttask.services;
 
 import org.springframework.stereotype.Service;
 import ru.malkov.easybottesttask.abstractClasses.Product;
+import ru.malkov.easybottesttask.entities.HardDrive;
+import ru.malkov.easybottesttask.entities.Laptop;
+import ru.malkov.easybottesttask.entities.Monitor;
+import ru.malkov.easybottesttask.entities.PersonalComputer;
+import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
+import ru.malkov.easybottesttask.repositories.ProductRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
-public interface ProductService<T extends Product> {
-    T addProduct(T product);
+public class ProductService<T extends Product> {
+    private final ProductRepository<T> repository;
 
-    T updateProduct(Long id, T product);
+    public ProductService(ProductRepository<T> repository) {
+        this.repository = repository;
+    }
 
-    List<T> getAllProducts();
+    public T addProduct(T product){
+        return repository.save(product);
+    }
 
-    T getProductById(Long id);
+    public T updateProduct(Long id, T source) throws ProductTypeCastException {
+        T pcToUpdate = repository.getReferenceById(id);
+        pcToUpdate.update(source);
+        return repository.save(pcToUpdate);
+    }
 
-    default void updateProduct(Product target, Product source) {
-        if (source.getSerialNumber() != null) {
-            target.setSerialNumber(source.getSerialNumber());
-        }
-        if (source.getPrice() != null) {
-            target.setPrice(source.getPrice());
-        }
-        if (source.getManufacturer() != null) {
-            target.setManufacturer(source.getManufacturer());
-        }
-        if (source.getLeftNumber() != null) {
-            target.setLeftNumber(source.getLeftNumber());
-        }
-        if (source.getProductType() != null) {
-            target.setProductType(source.getProductType());
-        }
+    public List<T> getAllProducts(Class<? extends T> clazz){
+        return repository.findAllByType(clazz);
+    }
+
+    public T getProductById(Long id) throws NoSuchElementException {
+        return repository.findById(id).orElseThrow();
     }
 }
