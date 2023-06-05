@@ -28,7 +28,7 @@ public class HardDriveController {
 
     @GetMapping(value = "/get-all")
     public List<HardDrive> getAllLaptops() {
-        return service.getAllProducts();
+        return service.getAllProducts(HardDrive.class);
     }
 
     @GetMapping(value = "/get")

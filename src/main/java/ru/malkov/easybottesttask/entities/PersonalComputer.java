@@ -10,6 +10,7 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Table(schema = "easybot", name = "pc")
 public class PersonalComputer extends Product {
     public enum PCFormFactor{
         DESKTOP,
@@ -23,6 +24,7 @@ public class PersonalComputer extends Product {
     }
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "form_factor")
     private PCFormFactor formFactor;
 
     @Override
@@ -31,6 +33,8 @@ public class PersonalComputer extends Product {
         if(!(source instanceof PersonalComputer)){
             throw new ProductTypeCastException(new ClassCastException());
         }
-        this.formFactor = ((PersonalComputer) source).getFormFactor();
+        if(((PersonalComputer) source).getFormFactor() != null){
+            this.formFactor = ((PersonalComputer) source).getFormFactor();
+        }
     }
 }

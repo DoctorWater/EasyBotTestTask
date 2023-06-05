@@ -9,6 +9,7 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 
 /**
  * Main abstract class of all products.
+ * ATTENTION: SERIAL NUMBER MUST BE UNIQUE AMONG ALL PRODUCTS, NOT ONLY AMONG THE CERTAIN PRODUCT'S CATEGORY!
  */
 
 //I've decided to use abstract class instead of interface, because interfaces should not describe objects' states, only behavior.
@@ -20,7 +21,7 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Product {
     @Id
-    @Column(name = "serial_number")
+    @Column(name = "id")
     protected Long serialNumber;
     private String manufacturer;
     private Float price;

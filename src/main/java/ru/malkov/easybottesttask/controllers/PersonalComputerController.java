@@ -29,7 +29,7 @@ public class PersonalComputerController {
 
     @GetMapping(value = "/get-all")
     public List<PersonalComputer> getAllLaptops() {
-        return service.getAllProducts();
+        return service.getAllProducts(PersonalComputer.class);
     }
 
     @GetMapping(value = "/get")

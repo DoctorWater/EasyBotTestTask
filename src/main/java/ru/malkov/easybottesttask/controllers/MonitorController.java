@@ -29,7 +29,7 @@ public class MonitorController {
 
     @GetMapping(value = "/get-all")
     public List<Monitor> getAllLaptops() {
-        return service.getAllProducts();
+        return service.getAllProducts(Monitor.class);
     }
 
     @GetMapping(value = "/get")

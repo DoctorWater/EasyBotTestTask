@@ -10,6 +10,8 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 import ru.malkov.easybottesttask.repositories.ProductRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProductService<T extends Product> {
@@ -29,11 +31,11 @@ public class ProductService<T extends Product> {
         return repository.save(pcToUpdate);
     }
 
-    public List<T> getAllProducts(){
-        return repository.findAllByOrderBySerialNumberAsc();
+    public List<T> getAllProducts(Class<? extends T> clazz){
+        return repository.findAllByType(clazz);
     }
 
-    public T getProductById(Long id){
-        return repository.getReferenceById(id);
+    public T getProductById(Long id) throws NoSuchElementException {
+        return repository.findById(id).orElseThrow();
     }
 }

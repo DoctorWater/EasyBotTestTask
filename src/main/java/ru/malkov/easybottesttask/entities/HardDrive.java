@@ -3,6 +3,7 @@ package ru.malkov.easybottesttask.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Table(schema = "easybot", name = "hard_drive")
 public class HardDrive extends Product {
     private Integer memorySize;
 
@@ -29,6 +31,8 @@ public class HardDrive extends Product {
         if(!(source instanceof HardDrive)){
             throw new ProductTypeCastException(new ClassCastException());
         }
-        this.memorySize = ((HardDrive) source).getMemorySize();
+        if(((HardDrive) source).getMemorySize() != null){
+            this.memorySize = ((HardDrive) source).getMemorySize();
+        }
     }
 }

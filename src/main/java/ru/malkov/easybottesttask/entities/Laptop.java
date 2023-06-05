@@ -13,6 +13,7 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Table(schema = "easybot", name = "laptop")
 public class Laptop extends Product {
     public enum LaptopSize{
         THIRTEEN_INCHES,
@@ -34,6 +35,8 @@ public class Laptop extends Product {
         if(!(source instanceof Laptop)){
             throw new ProductTypeCastException(new ClassCastException());
         }
-        this.size = ((Laptop) source).getSize();
+        if(((Laptop) source).getSize() != null){
+            this.size = ((Laptop) source).getSize();
+        }
     }
 }

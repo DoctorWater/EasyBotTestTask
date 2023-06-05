@@ -29,7 +29,7 @@ public class LaptopController {
 
     @GetMapping(value = "/get-all")
     public List<Laptop> getAllLaptops() {
-        return service.getAllProducts();
+        return service.getAllProducts(Laptop.class);
     }
     @GetMapping(value = "/get")
     public Laptop getById(@RequestParam Long id){
