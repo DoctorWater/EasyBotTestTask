@@ -1,6 +1,9 @@
 package ru.malkov.easybottesttask.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,14 +16,15 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(schema = "easybot", name = "laptop")
+@Table(catalog = "EASYBOT", schema = "PUBLIC")
 public class Laptop extends Product {
-    public enum LaptopSize{
+    public enum LaptopSize {
         THIRTEEN_INCHES,
         FOURTEEN_INCHES,
         FIFTEEN_INCHES,
         SEVENTEEN_INCHES
     }
+
     @Enumerated(EnumType.STRING)
     private LaptopSize size;
 
@@ -32,10 +36,10 @@ public class Laptop extends Product {
     @Override
     public void update(Product source) throws ProductTypeCastException {
         super.update(source);
-        if(!(source instanceof Laptop)){
+        if (!(source instanceof Laptop)) {
             throw new ProductTypeCastException(new ClassCastException());
         }
-        if(((Laptop) source).getSize() != null){
+        if (((Laptop) source).getSize() != null) {
             this.size = ((Laptop) source).getSize();
         }
     }

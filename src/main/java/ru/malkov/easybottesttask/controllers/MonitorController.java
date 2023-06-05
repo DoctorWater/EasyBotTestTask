@@ -1,7 +1,6 @@
 package ru.malkov.easybottesttask.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ru.malkov.easybottesttask.entities.Laptop;
 import ru.malkov.easybottesttask.entities.Monitor;
 import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 import ru.malkov.easybottesttask.services.ProductService;
@@ -35,5 +34,10 @@ public class MonitorController {
     @GetMapping(value = "/get")
     public Monitor getById(@RequestParam Long id) {
         return service.getProductById(id);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public String deleteById(@RequestParam Long id) {
+        return service.deleteById(id);
     }
 }

@@ -22,12 +22,17 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 public abstract class Product {
     @Id
     @Column(name = "id")
-    protected Long serialNumber;
+    private Long serialNumber;
     private String manufacturer;
     private Float price;
     @Column(name = "left_number")
     private Integer leftNumber;
-    
+
+    /**
+     * Update method for general {@link Product} type. Should be overridden in all children. Ignores null fields.
+     * @param source -- source of new values for fields.
+     * @throws ProductTypeCastException -- thrown if {@link Product} can not be cast to the specific child type.
+     */
     public void update(Product source) throws ProductTypeCastException {
         if (source.getSerialNumber() != null) {
             this.setSerialNumber(source.getSerialNumber());

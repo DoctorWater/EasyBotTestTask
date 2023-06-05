@@ -1,7 +1,6 @@
 package ru.malkov.easybottesttask.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ru.malkov.easybottesttask.entities.Laptop;
 import ru.malkov.easybottesttask.entities.PersonalComputer;
 import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 import ru.malkov.easybottesttask.services.ProductService;
@@ -33,7 +32,12 @@ public class PersonalComputerController {
     }
 
     @GetMapping(value = "/get")
-    public PersonalComputer getById(@RequestParam Long id){
+    public PersonalComputer getById(@RequestParam Long id) {
         return service.getProductById(id);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public String deleteById(@RequestParam Long id) {
+        return service.deleteById(id);
     }
 }

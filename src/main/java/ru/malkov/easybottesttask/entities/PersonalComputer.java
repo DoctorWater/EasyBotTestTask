@@ -1,7 +1,10 @@
 package ru.malkov.easybottesttask.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.malkov.easybottesttask.abstractClasses.Product;
 import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 
@@ -10,9 +13,9 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(schema = "easybot", name = "pc")
+@Table(catalog = "EASYBOT", schema = "PUBLIC")
 public class PersonalComputer extends Product {
-    public enum PCFormFactor{
+    public enum PCFormFactor {
         DESKTOP,
         NETTOP,
         MONOBLOCK
@@ -30,10 +33,10 @@ public class PersonalComputer extends Product {
     @Override
     public void update(Product source) throws ProductTypeCastException {
         super.update(source);
-        if(!(source instanceof PersonalComputer)){
+        if (!(source instanceof PersonalComputer)) {
             throw new ProductTypeCastException(new ClassCastException());
         }
-        if(((PersonalComputer) source).getFormFactor() != null){
+        if (((PersonalComputer) source).getFormFactor() != null) {
             this.formFactor = ((PersonalComputer) source).getFormFactor();
         }
     }

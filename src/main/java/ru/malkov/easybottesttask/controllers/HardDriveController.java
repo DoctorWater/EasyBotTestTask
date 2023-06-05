@@ -32,7 +32,12 @@ public class HardDriveController {
     }
 
     @GetMapping(value = "/get")
-    public HardDrive getById(@RequestParam Long id){
+    public HardDrive getById(@RequestParam Long id) {
         return service.getProductById(id);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public String deleteById(@RequestParam Long id) {
+        return service.deleteById(id);
     }
 }

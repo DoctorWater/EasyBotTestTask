@@ -1,8 +1,6 @@
 package ru.malkov.easybottesttask.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +14,7 @@ import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(schema = "easybot", name = "monitor")
+@Table(catalog = "EASYBOT", schema = "PUBLIC")
 public class Monitor extends Product {
     private Float diagonal;
 
@@ -28,10 +26,10 @@ public class Monitor extends Product {
     @Override
     public void update(Product source) throws ProductTypeCastException {
         super.update(source);
-        if(!(source instanceof Monitor)){
+        if (!(source instanceof Monitor)) {
             throw new ProductTypeCastException(new ClassCastException());
         }
-        if(((Monitor) source).getDiagonal() != null){
+        if (((Monitor) source).getDiagonal() != null) {
             this.diagonal = ((Monitor) source).getDiagonal();
         }
     }
