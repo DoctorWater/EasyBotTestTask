@@ -8,17 +8,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.malkov.easybottesttask.abstractClasses.Product;
+import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class HardDrive extends Product {
     private Integer memorySize;
 
     public HardDrive(Long serialNumber, String manufacturer, Float price, Integer leftNumber, Integer memorySize) {
-        super(serialNumber, manufacturer, price, leftNumber, ProductType.HARDDRIVE);
+        super(serialNumber, manufacturer, price, leftNumber);
         this.memorySize = memorySize;
+    }
+
+    @Override
+    public void update(Product source) throws ProductTypeCastException {
+        super.update(source);
+        if(!(source instanceof HardDrive)){
+            throw new ProductTypeCastException(new ClassCastException());
+        }
+        this.memorySize = ((HardDrive) source).getMemorySize();
     }
 }

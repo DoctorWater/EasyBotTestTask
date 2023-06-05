@@ -5,29 +5,42 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.malkov.easybottesttask.entities.ProductType;
+import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 
 /**
  * Main abstract class of all products.
  */
 
 //I've decided to use abstract class instead of interface, because interfaces should not describe objects' states, only behavior.
-@MappedSuperclass
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "serial_number")
     protected Long serialNumber;
     private String manufacturer;
     private Float price;
     @Column(name = "left_number")
     private Integer leftNumber;
-    @Enumerated(EnumType.STRING)
-    private ProductType productType;
+    
+    public void update(Product source) throws ProductTypeCastException {
+        if (source.getSerialNumber() != null) {
+            this.setSerialNumber(source.getSerialNumber());
+        }
+        if (source.getPrice() != null) {
+            this.setPrice(source.getPrice());
+        }
+        if (source.getManufacturer() != null) {
+            this.setManufacturer(source.getManufacturer());
+        }
+        if (source.getLeftNumber() != null) {
+            this.setLeftNumber(source.getLeftNumber());
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,9 +52,7 @@ public abstract class Product {
         if (getManufacturer() != null ? !getManufacturer().equals(product.getManufacturer()) : product.getManufacturer() != null)
             return false;
         if (getPrice() != null ? !getPrice().equals(product.getPrice()) : product.getPrice() != null) return false;
-        if (getLeftNumber() != null ? !getLeftNumber().equals(product.getLeftNumber()) : product.getLeftNumber() != null)
-            return false;
-        return getProductType() == product.getProductType();
+        return getLeftNumber() != null ? getLeftNumber().equals(product.getLeftNumber()) : product.getLeftNumber() == null;
     }
 
     @Override
@@ -50,7 +61,6 @@ public abstract class Product {
         result = 31 * result + (getManufacturer() != null ? getManufacturer().hashCode() : 0);
         result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
         result = 31 * result + (getLeftNumber() != null ? getLeftNumber().hashCode() : 0);
-        result = 31 * result + (getProductType() != null ? getProductType().hashCode() : 0);
         return result;
     }
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.malkov.easybottesttask.entities.PersonalComputer;
+import ru.malkov.easybottesttask.exceptions.ProductTypeCastException;
 import ru.malkov.easybottesttask.repositories.ProductRepository;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PersonalComputerServiceTest {
 
     @Test
     @DisplayName("Should update the existing object, save and return it")
-    void updatePersonalComputerAndReturnsIt() {
+    void updatePersonalComputerAndReturnsIt() throws ProductTypeCastException {
         PersonalComputer target = new PersonalComputer(
                 123456L, "Dell", 1000.0f, 10, PersonalComputer.PCFormFactor.DESKTOP);
         PersonalComputer source = new PersonalComputer(
@@ -51,7 +52,7 @@ public class PersonalComputerServiceTest {
         service.updateProduct(123456L, source);
 
         assertEquals("HP", target.getManufacturer());
-        assertNotNull(target.getProductType());
+        assertNotNull(target.getSerialNumber());
     }
 
     @Test
